@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block body %}
+<div class="welcome"><div><p class="eyebrow">OWNER CONTROL CENTER</p><h1>Admin Panel</h1><p class="muted">Manage accounts and shared starter files.</p></div><a class="outline" href="/dashboard">Dashboard</a></div>
+<section class="card glow-card">
+  <div class="section-head"><div><p class="eyebrow">STARTER LIBRARY</p><h2>Default Files Folder</h2></div><span class="pill">{{default_files|length}} Python files</span></div>
+  <p class="hint">এখানে একসাথে অনেকগুলো .py ফাইল যোগ করতে পারবে। নতুন User Registration করলে এই ফোল্ডারের সব ফাইল তার নিজের আলাদা ফোল্ডারে কপি হবে। User-রা Admin-এর মূল Default Files পরিবর্তন করতে পারবে না।</p>
+  <p class="hint">All files and folders (including Pb2) inside data/default_files are copied into new accounts. Existing accounts receive missing files/folders the next time they open Dashboard. Put your Pb2 folder inside data/default_files on the server.</p>
+  {% if default_files %}<div class="file-list">{% for f in default_files %}<div class="file"><span><span class="file-icon">PY</span>{{f}}</span><span class="file-actions"><span class="muted">New users get this file</span><form method="post" action="/admin/default-files/delete/{{f}}" onsubmit="return confirm('Remove this default file? Existing user copies will stay.')"><button class="link danger-text">Remove</button></form></span></div>{% endfor %}</div>{% else %}<div class="empty-state"><strong>Your default folder is empty</strong><p class="muted">Place Python starter files in data/default_files on the server.</p></div>{% endif %}
+</section>
+<section class="card">
+  <div class="section-head"><div><p class="eyebrow">ACCOUNT CONTROL</p><h2>User Management</h2></div><span class="pill">{{users|length}} accounts</span></div>
+  {% for u in users %}<div class="file"><span><strong>{{u.username}}</strong> {% if u.is_admin %}<small class="admin-tag">ADMIN</small>{% endif %}<small class="muted">#{{u.id}}</small></span><span class="file-actions"><span class="muted">{{u.created_at}}</span>{% if not u.is_admin %}<form method="post" action="/admin/delete/{{u.id}}" onsubmit="return confirm('Delete this user and their files?')"><button class="link danger-text">Delete</button></form>{% endif %}</span></div>{% endfor %}
+</section>
+{% endblock %}

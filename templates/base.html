@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JISAN X SAMI | Premium TCP Hosting</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body><header><a class="brand" href="/"><span class="logo">JX</span><span>JISAN X SAMI<small>PREMIUM TCP HOSTING</small></span></a>
+{% if session.get('uid') %}<nav><a href="/dashboard">Dashboard</a><a href="/console">Console</a><a href="/logout">Logout</a></nav>{% endif %}</header>
+<main>{% with messages=get_flashed_messages() %}{% if messages %}<div class="messages">{% for m in messages %}<p>{{m}}</p>{% endfor %}</div>{% endif %}{% endwith %}{% block body %}{% endblock %}</main>
+<footer>JISAN X SAMI · Python Hosting Panel</footer></body></html>

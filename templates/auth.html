@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block body %}<section class="auth card"><p class="eyebrow">SECURE ACCESS</p><h1>{{ 'Create account' if mode=='register' else 'Welcome back' }}</h1>
+<p class="muted">Manage your Python projects in one place.</p><form method="post">
+<label>Username</label><input name="username" required minlength="3" maxlength="24" autocomplete="username">
+<label>Password</label><input type="password" name="password" required minlength="{{10 if mode=='register' else 1}}" autocomplete="{{'new-password' if mode=='register' else 'current-password'}}">
+<button>{{'Register' if mode=='register' else 'Login'}}</button></form>
+<p class="muted">{% if mode=='register' %}Already registered? <a href="/login">Login</a>{% else %}New here? <a href="/register">Create account</a>{% endif %}</p></section>{% endblock %}

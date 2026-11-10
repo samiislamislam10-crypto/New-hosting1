@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block body %}
+<div class="welcome"><div><p class="eyebrow">CONTROL CENTER</p><h1>Dashboard</h1><p class="muted">Welcome, {{user.username}}</p></div>{% if user.is_admin %}<a class="outline" href="/admin">Admin panel</a>{% endif %}</div>
+<div class="stats"><div class="card"><span class="muted">ACCOUNT</span><strong>{{user.username}}</strong></div><div class="card"><span class="muted">SERVER STATUS</span><strong class="{{'green' if server and server.status=='RUNNING' else 'red'}}">{{server.status if server else 'STOPPED'}}</strong></div></div>
+<section class="card"><div class="section-head"><h2>Server Manager</h2><span class="pill">Python Runtime</span></div>
+<div class="actions console-top"><a class="outline" href="/console">Console</a></div>
+<form action="/start" method="post" class="inline"><button {% if 'main.py' not in files %}disabled{% endif %}>Start main.py</button></form>
+<div class="actions"><form action="/stop" method="post"><button class="danger">Stop</button></form><form action="/restart" method="post"><button class="secondary">Restart</button></form></div>
+<p class="hint">Each account can run one Python process at a time. Use only scripts you trust.</p>
+{% if 'main.py' in files %}<p><a class="outline" href="/credentials">Edit only main.py UID / Password</a></p>{% endif %}
+</section>
+<section class="card"><div class="section-head"><h2>File Manager</h2><span class="pill">{{files|length}} files</span></div>
+
+{% if files %}<div class="file-list">{% for f in files %}<div class="file"><span>{{f}}</span>{% if user.is_admin %}<span class="file-actions"><a href="/file/{{f}}">View</a><form method="post" action="/delete/{{f}}" onsubmit="return confirm('Delete this file?')"><button class="link danger-text">Delete</button></form></span>{% endif %}</div>{% endfor %}</div>{% else %}<p class="muted">No Python files uploaded yet.</p>{% endif %}</section>
+{% endblock %}

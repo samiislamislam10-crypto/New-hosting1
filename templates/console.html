@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% block body %}
+<section class="card console-card">
+  <div class="section-head">
+    <div><p class="eyebrow">LIVE OUTPUT</p><h2>Server Console</h2><p class="hint">Latest server output · Auto refresh every 3 seconds</p></div>
+    <div class="console-tools"><a class="outline" href="/dashboard">Dashboard</a><button type="button" class="secondary" onclick="location.reload()">Refresh</button></div>
+  </div>
+  <div class="terminal-bar"><span class="terminal-dots"><i></i><i></i><i></i></span><span>console.log</span><span class="live-indicator">● LIVE</span></div>
+  <pre id="console-output">{{content}}</pre>
+  <p class="hint">কোনো output না দেখালে Server Start করে কয়েক সেকেন্ড অপেক্ষা করো। Python script-এর print() output এখানে দেখা যাবে।</p>
+</section>
+<meta http-equiv="refresh" content="3">
+<script>
+window.addEventListener('load', function () {
+  const out = document.getElementById('console-output');
+  if (out) out.scrollTop = out.scrollHeight;
+});
+</script>
+{% endblock %}
